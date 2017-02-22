@@ -14,6 +14,7 @@
 
 #include <agency/detail/config.hpp>
 #include <agency/omp/execution.hpp>
+#include <agency/omp/execution_agent.hpp>
 
 /// \namespace agency::omp
 /// \brief `agency::omp` is the namespace which contains OpenMP-specific functionality.

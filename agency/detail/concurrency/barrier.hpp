@@ -8,6 +8,10 @@
 #include <mutex>
 #include <condition_variable>
 
+#if defined(_OPENMP)
+#include <omp.h>
+#endif
+
 namespace agency
 {
 namespace detail
@@ -121,6 +125,22 @@ protected:
     std::atomic<size_t> generation_;
 };
 
+#if defined(_OPENMP)
+struct openmp_barrier
+{
+    inline explicit openmp_barrier(size_t) { }
+
+    inline void arrive_and_drop()
+    {
+      # pragma omp barrier
+    }
+
+    inline void arrive_and_wait()
+    {
+      # pragma omp barrier
+    }
+};
+#endif
 
 using barrier = blocking_barrier;
 

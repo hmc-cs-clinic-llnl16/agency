@@ -97,7 +97,6 @@ class unsequenced_execution_policy : public basic_execution_policy<unsequenced_a
 
 const unsequenced_execution_policy unseq{};
 
-
 } // end omp
 } // end agency
 

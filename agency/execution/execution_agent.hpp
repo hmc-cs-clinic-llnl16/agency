@@ -354,7 +354,7 @@ namespace detail
 
 
 
-template<class Index, class MemoryResource>
+template<class Index, class MemoryResource, class Barrier = agency::detail::barrier >
 class basic_concurrent_agent : public detail::basic_execution_agent<concurrent_execution_tag, Index>
 {
   private:
@@ -363,9 +363,9 @@ class basic_concurrent_agent : public detail::basic_execution_agent<concurrent_e
     static constexpr size_t broadcast_channel_size = sizeof(void*);
     using broadcast_channel_type = agency::experimental::array<char, broadcast_channel_size>;
 
-    // this class hides agency::detail::barrier & __syncthreads()
+    // this class hides the agency barrier & __syncthreads()
     // behind a uniform interface so that we can use basic_concurrent_agent
-    // in both C++ and CUDA C++
+    // in raw C++, OpenMP, and CUDA C++
     class barrier
     {
       public:
@@ -388,7 +388,7 @@ class basic_concurrent_agent : public detail::basic_execution_agent<concurrent_e
 
 #ifndef __CUDA_ARCH__
       private:
-        agency::detail::barrier barrier_;
+        Barrier barrier_;
 #endif
     };
 
